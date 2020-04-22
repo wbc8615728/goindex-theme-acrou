@@ -5,6 +5,7 @@ import { utc2beijing, formatFileSize } from "../utils/AcrouUtil";
 var list = Vue.component("list", {
   data: function () {
     return {
+      page: {},
       files: [],
       loading: false,
       columns: [
@@ -42,11 +43,15 @@ var list = Vue.component("list", {
     render(path, param) {
       this.loading = true;
       var password = localStorage.getItem("password" + path);
-
+      var p = {
+          password: password || null,
+          page_token: null,
+          page_index: 0
+      };
       axios
-        .post(path, { password: password, q: decodeURIComponent(param) })
+        .post(path, p)
         .then((res) => {
-          var data = res.data;
+          var data = res.data.data;
           if (
             typeof data != "null" &&
             data.hasOwnProperty("error") &&
@@ -88,7 +93,7 @@ var list = Vue.component("list", {
                   this.$emit("headmd", {
                     display: true,
                     file: item,
-                    path: p
+                    path: p,
                   });
                 }
                 // REDEME.md

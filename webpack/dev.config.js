@@ -34,7 +34,7 @@ module.exports = {
     open: true,
     proxy: {
       "/api": {
-        target: "https://oss.achirou.workers.dev/",
+        target: "https://ossdev.achirou.workers.dev/",
         ws: true,
         changeOrigin: true,
         pathRewrite: {
